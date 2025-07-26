@@ -1,0 +1,28 @@
+
+; calculate null terminated string length
+; int strlen(String str)
+strlen:
+    push    ebx
+    mov     ebx,     eax
+
+    next_char:
+    cmp    byte[eax], 0
+    jz     finished
+    inc    eax
+    jmp    next_char
+
+    finished:
+    sub    eax,     ebx
+    pop    ebx
+    ret
+
+; print null terminated string on console
+; void sprint(String msg)
+sprint:
+    mov     ecx,     eax
+    call    strlen
+    mov     ebx,     1 
+    mov     edx,     eax
+    mov     eax,     4
+    int     0x80
+    ret

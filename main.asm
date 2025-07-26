@@ -1,13 +1,13 @@
 
+%include 'exit.asm'
+%include 'string.asm'
+
 ; section for constant datas
 SECTION .data
 
-    ; exit codes
-    EXIT_SUCCESS db 0
-    EXIT_FAILURE db 1
-
     ; other data
-    msg db 'Hello World', 0xA, 0
+    msg1 db 'I Fucking Love Nasm', 0xA, 0
+    msg2 db 'Nasm Is Very Hard', 0xA, 0
 
 ; make main "function" visible
 SECTION .text
@@ -16,31 +16,14 @@ global _start
 ; main function
 _start:
 
-    ; print hello world
-    mov     eax,     msg
-    call    string_length_get
-    mov     ebx,     1 
-    mov     ecx,     msg
-    mov     edx,     eax
-    mov     eax,     4
-    int     0x80
+    ; print msg1
+    mov     eax,     msg1
+    call    sprint
 
-    ; exit
-    mov     ebx,     EXIT_SUCCESS
-    mov     eax,     1
-    int     0x80
+    ; print msg2
+    mov     eax,     msg2
+    call    sprint
 
-string_length_get:
-    push    ebx
-    mov     ebx,     eax
-
-    next_char:
-    cmp    byte[eax], 0
-    jz     finished
-    inc    eax
-    jmp    next_char
-
-    finished:
-    sub    eax,     ebx
-    pop    ebx
-    ret
+    ; exit app
+    mov     eax,     EXIT_SUCCESS
+    call    exit
