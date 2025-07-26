@@ -9,8 +9,15 @@ global _start
 
 ; main function
 _start:
-    mov     ebx,     1    ; just write to stdout
-    mov     ecx,     msg  ; move msg into register wich SYS_WRITE will use
-    mov     edx,     12   ; number of characters (bytes)
-    mov     eax,     4    ; request write
-    int 0x80
+    
+    ; print hello world
+    mov     ebx,     1   
+    mov     ecx,     msg
+    mov     edx,     12
+    mov     eax,     4
+    int     0x80
+
+    ; exit
+    mov     ebx,     0
+    mov     eax,     1
+    int     0x80
