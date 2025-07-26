@@ -1,4 +1,7 @@
 
+SECTION .data
+    new_line db 0xA
+
 ; calculate null terminated string length
 ; int strlen(String str)
 strlen:
@@ -25,4 +28,15 @@ sprint:
     mov     edx,     eax
     mov     eax,     4
     int     0x80
+    ret
+
+sprintln:
+    call    sprint
+    push    eax
+    mov     eax,    0xA
+    push    eax
+    mov     eax,    esp
+    call    sprint
+    pop     eax
+    pop     eax
     ret

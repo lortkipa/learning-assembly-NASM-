@@ -6,8 +6,8 @@
 SECTION .data
 
     ; messages
-    msg1 db 'I Fucking Love Nasm', 0xA, 0
-    msg2 db 'Nasm Is Very Hard', 0xA, 0
+    msg1 db 'I Fucking Love Nasm', 0
+    msg2 db 'Nasm Is Very Hard', 0
 
 SECTION .text
 global _start
@@ -16,11 +16,11 @@ _start:
 
     ; print msg1
     mov     eax,     msg1
-    call    sprint
+    call    sprintln
 
     ; print msg2
     mov     eax,     msg2
-    call    sprint
+    call    sprintln
 
     ; exit app
     mov     eax,     EXIT_SUCCESS
