@@ -1,7 +1,13 @@
 
 ; section for constant datas
 SECTION .data
-    msg db 'Hello World', 0xA ; create string
+
+    ; exit codes
+    EXIT_SUCCESS db 0
+    EXIT_FAILURE db 1
+
+    ; other data
+    msg db 'Hello World', 0xA
 
 ; make main "function" visible
 SECTION .text
@@ -18,6 +24,6 @@ _start:
     int     0x80
 
     ; exit
-    mov     ebx,     0
+    mov     ebx,     EXIT_SUCCESS
     mov     eax,     1
     int     0x80
