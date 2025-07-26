@@ -22,12 +22,20 @@ strlen:
 ; print null terminated string on console
 ; void sprint(String msg)
 sprint:
+    push    eax
+    push    ecx
+    push    ebx
+
     mov     ecx,     eax
     call    strlen
     mov     ebx,     1 
     mov     edx,     eax
     mov     eax,     4
     int     0x80
+
+    pop     ebx
+    pop     ecx
+    pop     eax
     ret
 
 sprintln:
