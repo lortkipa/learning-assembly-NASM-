@@ -7,7 +7,7 @@ SECTION .data
     EXIT_FAILURE db 1
 
     ; other data
-    msg db 'World', 0xA
+    msg db 'Hello World', 0xA, 0
 
 ; make main "function" visible
 SECTION .text
@@ -16,18 +16,9 @@ global _start
 ; main function
 _start:
 
-    ; get string length
-    mov     ebx,     msg
-    mov     eax,     ebx
-    next_char:
-    cmp     byte[eax], 0
-    jz      finished
-    inc     eax
-    jmp     next_char
-    finished:
-    sub     eax,     ebx
-    
     ; print hello world
+    mov     eax,     msg
+    call    string_length_get
     mov     ebx,     1 
     mov     ecx,     msg
     mov     edx,     eax
@@ -38,3 +29,18 @@ _start:
     mov     ebx,     EXIT_SUCCESS
     mov     eax,     1
     int     0x80
+
+string_length_get:
+    push    ebx
+    mov     ebx,     eax
+
+    next_char:
+    cmp    byte[eax], 0
+    jz     finished
+    inc    eax
+    jmp    next_char
+
+    finished:
+    sub    eax,     ebx
+    pop    ebx
+    ret
