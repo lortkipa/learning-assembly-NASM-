@@ -2,20 +2,33 @@
 %include 'exit.asm'
 %include 'string.asm'
 
-; SECTION .text
-global _start
+%define MAX_NAME_LENGTH 50
 
+SECTION .data
+    question     db     'Please enter your name: ', 0
+    msg_starter  db     'Hello, ', 0
+
+SECTION .bss
+    name:     resb    MAX_NAME_LENGTH
+
+SECTION .text
+global _start
 _start:
 
-    ; print arguments
-    pop     ecx
-    next_arg:
-    cmp     ecx,     0
-    jz      finish
-    pop     eax
-    call    sprintln
-    dec     ecx
-    jmp     next_arg
+    ; ask user
+    mov     eax,     question
+    call    sprint
+
+    ; get name
+    mov     eax,     MAX_NAME_LENGTH
+    mov     ebx,     name
+    call    sinput
+
+    ; log message
+    mov     eax,     msg_starter
+    call    sprint
+    mov     eax,     name
+    call    sprint
 
     ; exit app
     finish:

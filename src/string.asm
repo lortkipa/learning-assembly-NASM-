@@ -1,7 +1,4 @@
 
-SECTION .data
-    new_line db 0xA
-
 ; calculate null terminated string length
 ; int strlen(String str)
 strlen:
@@ -47,4 +44,14 @@ sprintln:
     call    sprint
     pop     eax
     pop     eax
+    ret
+
+; get input from user
+; String sinput(int size)
+sinput:
+    mov     edx,     eax
+    mov     ecx,     ebx
+    mov     ebx,     0
+    mov     eax,     3
+    int     0x80
     ret
