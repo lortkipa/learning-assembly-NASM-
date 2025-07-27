@@ -2,35 +2,30 @@
 %include 'exit.asm'
 %include 'string.asm'
 
-%define MAX_NAME_LENGTH 50
+%define NUM_TO_CHAR_OFFSET 48
+%define MAX_COUNT_NUMBER 10
 
 SECTION .data
     question     db     'Please enter your name: ', 0
     msg_starter  db     'Hello, ', 0
 
-SECTION .bss
-    name:     resb    MAX_NAME_LENGTH
-
 SECTION .text
 global _start
 _start:
 
-    ; ask user
-    mov     eax,     question
-    call    sprint
-
-    ; get name
-    mov     eax,     MAX_NAME_LENGTH
-    mov     ebx,     name
-    call    sinput
-
-    ; log message
-    mov     eax,     msg_starter
-    call    sprint
-    mov     eax,     name
-    call    sprint
-
+    ; count from 0
+    mov     ecx,    0
+    next_number:
+    inc     ecx
+    mov     eax,    ecx
+    add     eax,    NUM_TO_CHAR_OFFSET
+    push    eax
+    mov     eax,    esp
+    call    sprintln
+    pop     eax
+    cmp     ecx,    MAX_COUNT_NUMBER
+    jne     next_number
+     
     ; exit app
     finish:
-    mov     eax,     EXIT_SUCCESS
-    call    exit
+    call exit_success
